@@ -8,8 +8,6 @@ public interface PizzeriaService {
 
     String getName();
     String getAddress();
-    void setName(String name);
-    void setAddress(String address);
     Calzone makePizza(Calzone calzone);
     Margherita makePizza(Margherita margherita);
     Marinara makePizza(Marinara marinara);

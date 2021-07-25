@@ -3,12 +3,16 @@ package com.agency04.sbss.pizza.service;
 import com.agency04.sbss.pizza.model.Calzone;
 import com.agency04.sbss.pizza.model.Margherita;
 import com.agency04.sbss.pizza.model.Marinara;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
 
     private DominosPizzeria dominosPizzeria;
     private PizzaHutPizzeria pizzaHutPizzeria;
 
+    @Autowired
     public PizzaDeliveryServiceImpl(DominosPizzeria dominosPizzeria, PizzaHutPizzeria pizzaHutPizzeria) {
         this.dominosPizzeria = dominosPizzeria;
         this.pizzaHutPizzeria = pizzaHutPizzeria;

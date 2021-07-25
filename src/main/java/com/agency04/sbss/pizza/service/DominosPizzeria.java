@@ -3,12 +3,19 @@ package com.agency04.sbss.pizza.service;
 import com.agency04.sbss.pizza.model.Calzone;
 import com.agency04.sbss.pizza.model.Margherita;
 import com.agency04.sbss.pizza.model.Marinara;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DominosPizzeria implements PizzeriaService {
 
+    @Value("${dominosName}")
     private String name;
-    private String address;
 
+    @Value("${dominosAddress}")
+    private String address;
 
     @Override
     public String getName() {
@@ -20,12 +27,14 @@ public class DominosPizzeria implements PizzeriaService {
         return address;
     }
 
-    @Override
+
+    @Qualifier("dominosPizzeria")
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
+
+    @Qualifier("dominosPizzeria")
     public void setAddress(String address) {
         this.address = address;
     }
