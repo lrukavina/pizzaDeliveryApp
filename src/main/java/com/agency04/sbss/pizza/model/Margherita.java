@@ -1,6 +1,10 @@
 package com.agency04.sbss.pizza.model;
 
 import com.agency04.sbss.pizza.Pizza;
+import com.agency04.sbss.pizza.enumeration.PizzaIngredient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Margherita implements Pizza {
     @Override
@@ -9,7 +13,13 @@ public class Margherita implements Pizza {
     }
 
     @Override
-    public String getIngredients() {
-        return "Tomato sauce, mozzarella, and oregano";
+    public List<PizzaIngredient> getIngredients() {
+        List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+
+        pizzaIngredients.add(PizzaIngredient.TOMATO_SAUCE);
+        pizzaIngredients.add(PizzaIngredient.MOZZARELLA);
+        pizzaIngredients.add(PizzaIngredient.OREGANO);
+
+        return pizzaIngredients;
     }
 }

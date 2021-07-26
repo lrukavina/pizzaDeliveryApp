@@ -1,20 +1,23 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.Calzone;
-import com.agency04.sbss.pizza.model.Margherita;
-import com.agency04.sbss.pizza.model.Marinara;
+import com.agency04.sbss.pizza.Pizza;
+import com.agency04.sbss.pizza.enumeration.PizzaIngredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+import java.util.List;
+
 public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
 
     private DominosPizzeria dominosPizzeria;
     private PizzaHutPizzeria pizzaHutPizzeria;
 
-    @Autowired
-    public PizzaDeliveryServiceImpl(DominosPizzeria dominosPizzeria, PizzaHutPizzeria pizzaHutPizzeria) {
+    public PizzaDeliveryServiceImpl(DominosPizzeria dominosPizzeria) {
         this.dominosPizzeria = dominosPizzeria;
+    }
+
+    @Autowired
+    public void setPizzaHutPizzeria(PizzaHutPizzeria pizzaHutPizzeria) {
         this.pizzaHutPizzeria = pizzaHutPizzeria;
     }
 
@@ -27,17 +30,25 @@ public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
     }
 
     @Override
-    public String orderPizza(Calzone calzone) {
-        return "You've ordered "+calzone.getName()+" pizza with "+calzone.getIngredients();
+    public String orderPizza(Pizza pizza) {
+        return "You've ordered "+pizza.getName()+" pizza with "+getIngredientsDescription(pizza.getIngredients());
     }
 
-    @Override
-    public String orderPizza(Margherita margherita) {
-        return "You've ordered "+margherita.getName()+" pizza with "+margherita.getIngredients();
-    }
+    private String getIngredientsDescription(List<PizzaIngredient> pizzaIngredients){
+        StringBuilder ingredients = new StringBuilder();
 
-    @Override
-    public String orderPizza(Marinara marinara) {
-        return "You've ordered "+marinara.getName()+" pizza with "+marinara.getIngredients();
+        for(int i = 0; i < pizzaIngredients.size(); i++){
+
+            if(i >= pizzaIngredients.size() -1)
+                ingredients.append(" and ");
+
+            ingredients.append(pizzaIngredients.get(i).getDescription());
+
+            if(i < pizzaIngredients.size() - 2){
+                ingredients.append(", ");
+            }
+        }
+
+        return ingredients.toString();
     }
 }

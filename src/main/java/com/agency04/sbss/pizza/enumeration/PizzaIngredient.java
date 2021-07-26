@@ -8,7 +8,9 @@ public enum PizzaIngredient {
     HAM("ham"),
     MUSHROOMS("mushrooms"),
     ARTICHOKES("artichokes"),
-    ANCHOVIES("anchovies");
+    ANCHOVIES("anchovies"),
+    GARLIC("garlic"),
+    BASIL("basil");
 
 
     private final String description;
