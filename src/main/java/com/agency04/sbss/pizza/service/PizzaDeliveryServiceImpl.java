@@ -16,7 +16,6 @@ public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
         this.dominosPizzeria = dominosPizzeria;
     }
 
-    @Autowired
     public void setPizzaHutPizzeria(PizzaHutPizzeria pizzaHutPizzeria) {
         this.pizzaHutPizzeria = pizzaHutPizzeria;
     }
