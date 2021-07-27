@@ -3,29 +3,20 @@ package com.agency04.sbss.pizza.service;
 import com.agency04.sbss.pizza.Pizza;
 import com.agency04.sbss.pizza.enumeration.PizzaIngredient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
 
-    private DominosPizzeria dominosPizzeria;
-    private PizzaHutPizzeria pizzaHutPizzeria;
+    @Autowired
+    @Qualifier("dominosPizzeria")
+    private PizzeriaService pizzeriaService;
 
-    public PizzaDeliveryServiceImpl(DominosPizzeria dominosPizzeria) {
-        this.dominosPizzeria = dominosPizzeria;
-    }
-
-    public void setPizzaHutPizzeria(PizzaHutPizzeria pizzaHutPizzeria) {
-        this.pizzaHutPizzeria = pizzaHutPizzeria;
-    }
-
-    public DominosPizzeria getDominosPizzeria() {
-        return dominosPizzeria;
-    }
-
-    public PizzaHutPizzeria getPizzaHutPizzeria() {
-        return pizzaHutPizzeria;
+    public PizzeriaService getPizzeriaService() {
+        return pizzeriaService;
     }
 
     @Override

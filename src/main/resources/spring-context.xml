@@ -9,21 +9,8 @@
 
     <!-- Define your Beans here -->
 
+    <context:component-scan base-package="com.agency04.sbss.pizza"/>
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="pizzaDelivery" class="com.agency04.sbss.pizza.service.PizzaDeliveryServiceImpl">
-        <constructor-arg index="0" ref="dominos"/>
-        <property name="pizzaHutPizzeria" ref="pizzahut" />
-    </bean>
-
-    <bean id="dominos" class="com.agency04.sbss.pizza.service.DominosPizzeria">
-        <property name="name" value="Domino's"/>
-        <property name="address" value="123 Pizza Av."/>
-    </bean>
-
-    <bean id="pizzahut" class="com.agency04.sbss.pizza.service.PizzaHutPizzeria">
-        <property name="name" value="${pizzaHut.name}"/>
-        <property name="address" value="${pizzaHut.address}"/>
-    </bean>
 
 </beans>

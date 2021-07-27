@@ -7,7 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class DominosPizzeria implements PizzeriaService {
 
+    @Value("Domino's")
     private String name;
+
+    @Value("123 Pizza av.")
     private String address;
 
     @Override
