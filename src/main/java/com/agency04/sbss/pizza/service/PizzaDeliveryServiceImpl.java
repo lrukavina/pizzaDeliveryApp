@@ -2,15 +2,18 @@ package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.Pizza;
 import com.agency04.sbss.pizza.enumeration.PizzaIngredient;
+import com.agency04.sbss.pizza.model.Calzone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.List;
 
 @Component
-@Scope("prototype")
+@Scope
 public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
 
     @Autowired
@@ -19,6 +22,17 @@ public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
 
     public PizzeriaService getPizzeriaService() {
         return pizzeriaService;
+    }
+
+    @PostConstruct
+    public void initializeData(){
+        System.out.println("Data has been initialized");
+    }
+
+    @PreDestroy
+    public void printOrders(){
+        System.out.println(this.orderPizza(new Calzone()) +" from "
+        + this.getPizzeriaService().getName() +" located on "+this.getPizzeriaService().getAddress());
     }
 
     @Override
