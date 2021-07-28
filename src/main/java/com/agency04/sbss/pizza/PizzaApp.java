@@ -14,11 +14,11 @@ public class PizzaApp {
         // Add some pizza code
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
         PizzaDeliveryServiceImpl pizzaDelivery = context.getBean("pizzaDeliveryServiceImpl", PizzaDeliveryServiceImpl.class);
+        PizzaDeliveryServiceImpl pizzaDeliveryTestScope = context.getBean("pizzaDeliveryServiceImpl", PizzaDeliveryServiceImpl.class);
 
-
-        //printing values from order part 2
-        System.out.println(pizzaDelivery.orderPizza(new Margherita()) +" from "
-                + pizzaDelivery.getPizzeriaService().getName() +" located on "+pizzaDelivery.getPizzeriaService().getAddress());
+        ///printing memory locations
+        System.out.println(pizzaDelivery);
+        System.out.println(pizzaDeliveryTestScope);
 
         context.close();
 
