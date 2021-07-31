@@ -1,8 +1,10 @@
 package com.agency04.sbss.pizza;
 
+import com.agency04.sbss.pizza.configuration.PizzaConfig;
 import com.agency04.sbss.pizza.model.Calzone;
 import com.agency04.sbss.pizza.model.Margherita;
 import com.agency04.sbss.pizza.service.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
@@ -12,7 +14,7 @@ public class PizzaApp {
 
     public static void main(String[] args) {
         // Add some pizza code
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(PizzaConfig.class);
         PizzaDeliveryServiceImpl pizzaDelivery = context.getBean("pizzaDeliveryServiceImpl", PizzaDeliveryServiceImpl.class);
 
         context.close();
