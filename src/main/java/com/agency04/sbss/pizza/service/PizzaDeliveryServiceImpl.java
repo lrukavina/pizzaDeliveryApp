@@ -28,9 +28,9 @@ public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
     @PostConstruct
     public void initializeData(){
         System.out.println("Data has been initialized");
+        this.printOrders();
     }
 
-    @PreDestroy
     public void printOrders(){
         System.out.println(this.orderPizza(new Calzone()) +" from "
         + this.getPizzeriaService().getName() +" located on "+this.getPizzeriaService().getAddress());
