@@ -5,32 +5,41 @@ import com.agency04.sbss.pizza.enumeration.PizzaIngredient;
 import com.agency04.sbss.pizza.model.Calzone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;
 
-@Service
+@Component
 public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
 
-
     @Autowired
+    @Qualifier("dominosPizzeria")
     private PizzeriaService pizzeriaService;
+
+    private PizzeriaService initializedPizzeria;
 
     public PizzeriaService getPizzeriaService() {
         return pizzeriaService;
     }
 
-    @PostConstruct
-    public void initializeData(){
-        System.out.println("Data has been initialized");
-        this.printOrders();
+    public PizzeriaService getInitializedPizzeria() {
+        return initializedPizzeria;
     }
 
+    public void setInitializedPizzeria(PizzeriaService initializedPizzeria) {
+        this.initializedPizzeria = initializedPizzeria;
+    }
+
+    @PostConstruct
+    public void initializeData(){
+        this.setInitializedPizzeria(pizzeriaService);
+        System.out.println("Data has been initialized");
+        System.out.println(this.initializedPizzeria.getName() + " " + this.initializedPizzeria.getAddress());
+    }
+
+    @PreDestroy
     public void printOrders(){
         System.out.println(this.orderPizza(new Calzone()) +" from "
         + this.getPizzeriaService().getName() +" located on "+this.getPizzeriaService().getAddress());
