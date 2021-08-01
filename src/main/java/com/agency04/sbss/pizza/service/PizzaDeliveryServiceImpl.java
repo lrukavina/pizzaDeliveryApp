@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.List;
 
 @Service
@@ -17,28 +16,16 @@ public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
     @Autowired
     private PizzeriaService pizzeriaService;
 
-    private PizzeriaService initializedPizzeria;
-
     public PizzeriaService getPizzeriaService() {
         return pizzeriaService;
     }
 
-    public PizzeriaService getInitializedPizzeria() {
-        return initializedPizzeria;
-    }
-
-    public void setInitializedPizzeria(PizzeriaService initializedPizzeria) {
-        this.initializedPizzeria = initializedPizzeria;
-    }
-
     @PostConstruct
     public void initializeData(){
-        this.setInitializedPizzeria(pizzeriaService);
         System.out.println("Data has been initialized");
-        System.out.println(this.initializedPizzeria.getName() + " " + this.initializedPizzeria.getAddress());
+        this.printOrders();
     }
 
-    @PreDestroy
     public void printOrders(){
         System.out.println(this.orderPizza(new Calzone()) +" from "
         + this.getPizzeriaService().getName() +" located on "+this.getPizzeriaService().getAddress());
