@@ -1,8 +1,10 @@
 plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
-group 'com.agency04.sbss'
+group 'ag04.sbss'
 version '1.0'
 sourceCompatibility = '11'
 
@@ -17,11 +19,9 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}"))
-    implementation 'org.springframework:spring-context'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {

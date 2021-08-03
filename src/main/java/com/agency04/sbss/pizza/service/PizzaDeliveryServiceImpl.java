@@ -2,21 +2,33 @@ package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.Pizza;
 import com.agency04.sbss.pizza.enumeration.PizzaIngredient;
+import com.agency04.sbss.pizza.model.Calzone;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
-@Component
+@Service
 public class PizzaDeliveryServiceImpl implements PizzaDeliveryService {
 
+
     @Autowired
-    @Qualifier("dominosPizzeria")
     private PizzeriaService pizzeriaService;
 
     public PizzeriaService getPizzeriaService() {
         return pizzeriaService;
+    }
+
+    @PostConstruct
+    public void initializeData(){
+        System.out.println("Data has been initialized");
+        this.printOrders();
+    }
+
+    public void printOrders(){
+        System.out.println(this.orderPizza(new Calzone()) +" from "
+        + this.getPizzeriaService().getName() +" located on "+this.getPizzeriaService().getAddress());
     }
 
     @Override
