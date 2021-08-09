@@ -1,6 +1,7 @@
 package com.agency04.sbss.pizza.controller;
 
 import com.agency04.sbss.pizza.model.Customer;
+import com.agency04.sbss.pizza.service.CustomerService;
 import com.agency04.sbss.pizza.service.CustomerServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/customer")
 public class CustomerController {
 
-    private final CustomerServiceImpl customerService;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerServiceImpl customerService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
@@ -25,9 +26,9 @@ public class CustomerController {
     public ResponseEntity<Customer> saveCustomer(@RequestBody final Customer customer){
         return customerService.saveCustomer(customer)
                 .map(
-                        vaccineDTO -> ResponseEntity
+                        newCustomer -> ResponseEntity
                                 .status(HttpStatus.CREATED)
-                                .body(vaccineDTO)
+                                .body(newCustomer)
                 )
                 .orElseGet(
                         () -> ResponseEntity

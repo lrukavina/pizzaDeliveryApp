@@ -4,6 +4,9 @@ import com.agency04.sbss.pizza.Pizza;
 import com.agency04.sbss.pizza.dto.DeliveryOrderFormDTO;
 import com.agency04.sbss.pizza.dto.OrderedPizzaDTO;
 import com.agency04.sbss.pizza.enumeration.PizzaSize;
+import com.agency04.sbss.pizza.exception.PizzaNotOnMenuException;
+import com.agency04.sbss.pizza.exception.PizzaQuantityException;
+import com.agency04.sbss.pizza.exception.PizzaSizeException;
 import com.agency04.sbss.pizza.model.*;
 import com.agency04.sbss.pizza.repository.DeliveryRepository;
 import org.springframework.stereotype.Service;
@@ -58,7 +61,7 @@ public class DeliveryServiceImpl implements DeliveryService {
                 case "Margherita": pizza = new Margherita(); break;
                 case "Marinara": pizza = new Marinara(); break;
                 default:
-                    throw new IllegalStateException(orderedPizzaDTO.getPizzaName() + " pizza is not on the menu");
+                    throw new PizzaNotOnMenuException(orderedPizzaDTO.getPizzaName() + " pizza is not on the menu");
             }
 
             switch (orderedPizzaDTO.getPizzaSize()){
@@ -66,13 +69,14 @@ public class DeliveryServiceImpl implements DeliveryService {
                 case MEDIUM: pizza.setSize(PizzaSize.MEDIUM); break;
                 case LARGE: pizza.setSize(PizzaSize.LARGE); break;
                 default:
-                    throw new IllegalStateException(orderedPizzaDTO.getPizzaSize() + " is not available pizza size. " +
+                    throw new PizzaSizeException(orderedPizzaDTO.getPizzaSize() + " is not available pizza size. " +
                             "Sizes are: SMALL, MEDIUM or LARGE");
             }
 
             Integer numberOfPizzas = orderedPizzaDTO.getNumberOfPizzas();
             if (numberOfPizzas < 0){
-                throw new IllegalStateException("Number of ordered pizzas cannot be "+ numberOfPizzas +" It must be positive");
+                throw new PizzaQuantityException("Number of ordered pizzas cannot be "+ numberOfPizzas +"." +
+                        " It must be a positive number");
             }
 
             orderedPizzas.add(new OrderedPizza(pizza, numberOfPizzas));

@@ -1,5 +1,7 @@
 package com.agency04.sbss.pizza.repository;
 
+import com.agency04.sbss.pizza.exception.CustomerExistsException;
+import com.agency04.sbss.pizza.exception.CustomerNotFoundException;
 import com.agency04.sbss.pizza.model.Customer;
 import org.springframework.stereotype.Repository;
 
@@ -24,26 +26,33 @@ public class CustomerRepositoryImpl implements CustomerRepository{
             return optionalCustomer;
         }
         else {
-            throw new IllegalStateException("Customer with username: \""+ username +"\" does not exist!");
+            throw new CustomerNotFoundException("Customer with username: \""+ username +"\" does not exist!");
         }
+    }
+
+    private Optional<Customer> checkIfCustomerExists(String username){
+        Optional<Customer> optionalCustomer = customers.stream()
+                .filter(it -> Objects.equals(it.getUsername(), username)).findAny();
+
+        return optionalCustomer;
     }
 
     @Override
     public Optional<Customer> saveCustomer(Customer customer) {
-        Optional<Customer> checkedCustomer = findCustomerByUsername(customer.getUsername());
+        Optional<Customer> checkedCustomer = checkIfCustomerExists(customer.getUsername());
 
         if(checkedCustomer.isEmpty()){
             customers.add(customer);
             return Optional.of(customer);
         }
         else {
-            throw new IllegalStateException("Customer with username: \""+ customer.getUsername()+"\" does not exist!");
+            throw new CustomerExistsException("Customer with username: \""+ customer.getUsername()+"\" already exists!");
         }
     }
 
     @Override
     public Optional<Customer> updateCustomer(Customer updatedCustomer) {
-        Optional<Customer> checkedCustomer = findCustomerByUsername(updatedCustomer.getUsername());
+        Optional<Customer> checkedCustomer = checkIfCustomerExists(updatedCustomer.getUsername());
 
         if (checkedCustomer.isPresent()) {
             for (int i = 0; i < customers.size(); i++) {
@@ -53,7 +62,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
             return Optional.of(updatedCustomer);
         }
         else {
-            throw new IllegalStateException("Customer with username: \""+ updatedCustomer.getUsername()+"\" does not " +
+            throw new CustomerNotFoundException("Customer with username: \""+ updatedCustomer.getUsername()+"\" does not " +
                     "exist.");
         }
     }
@@ -61,7 +70,7 @@ public class CustomerRepositoryImpl implements CustomerRepository{
     @Override
     public void deleteCustomer(Customer customer) {
         if (!customers.removeIf(customers -> customers.equals(customer))) {
-            throw new IllegalStateException("Customer with username: \""+ customer.getUsername()+"\" does not " +
+            throw new CustomerNotFoundException("Customer with username: \""+ customer.getUsername()+"\" does not " +
                     "exist.");
         }
     }

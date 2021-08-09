@@ -2,6 +2,7 @@ package com.agency04.sbss.pizza.controller;
 
 import com.agency04.sbss.pizza.dto.DeliveryOrderFormDTO;
 import com.agency04.sbss.pizza.model.DeliveryOrderForm;
+import com.agency04.sbss.pizza.service.DeliveryService;
 import com.agency04.sbss.pizza.service.DeliveryServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,9 @@ import java.util.List;
 @RequestMapping("api/delivery")
 public class DeliveryController {
 
-    private final DeliveryServiceImpl deliveryService;
+    private final DeliveryService deliveryService;
 
-    public DeliveryController(DeliveryServiceImpl deliveryService) {
+    public DeliveryController(DeliveryService deliveryService) {
         this.deliveryService = deliveryService;
     }
 
