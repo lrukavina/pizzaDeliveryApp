@@ -1,6 +1,8 @@
 package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.Pizza;
+import com.agency04.sbss.pizza.converter.DeliveryToCustomerConverter;
+import com.agency04.sbss.pizza.converter.DeliveryToOrderedPizzaConverter;
 import com.agency04.sbss.pizza.dto.DeliveryOrderFormDTO;
 import com.agency04.sbss.pizza.dto.OrderedPizzaDTO;
 import com.agency04.sbss.pizza.enumeration.PizzaSize;
@@ -42,6 +44,8 @@ public class DeliveryServiceImpl implements DeliveryService {
         Optional<DeliveryOrderForm> deliveryOrder = deliveryRepository.saveOrder(deliveryOrderForm);
 
         if(deliveryOrder.isPresent()){
+            convertToCustomer(deliveryOrderForm);
+            convertToOrderedPizza(deliveryOrderForm);
             return Optional.of(deliveryOrderForm);
         }
         else {
@@ -84,5 +88,35 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         return new DeliveryOrderForm(deliveryOrderFormDTO.getCustomer(), orderedPizzas);
 
+    }
+
+    private void convertToCustomer(DeliveryOrderForm deliveryOrderForm){
+
+        DeliveryToCustomerConverter customerConverter = new DeliveryToCustomerConverter();
+        Customer convertedCustomer = customerConverter.convert(deliveryOrderForm);
+
+        if(convertedCustomer != null){
+            System.out.println("\nConverted customer:");
+            System.out.println("Username: " + convertedCustomer.getUsername());
+            System.out.println("Name: " + convertedCustomer.getName());
+            System.out.println("Surname: "+ convertedCustomer.getSurname());
+        }
+    }
+
+    private void convertToOrderedPizza(DeliveryOrderForm deliveryOrderForm){
+
+        DeliveryToOrderedPizzaConverter pizzaConverter = new DeliveryToOrderedPizzaConverter();
+        List<OrderedPizza> convertedOrderedPizzas = pizzaConverter.convert(deliveryOrderForm);
+
+        if(convertedOrderedPizzas != null){
+            System.out.println("\nConverted ordered pizzas: ");
+            for (OrderedPizza orderedPizza: convertedOrderedPizzas){
+                System.out.println("Pizza name: " + orderedPizza.getPizza().getName());
+                System.out.println("Pizza size: " + orderedPizza.getPizza().getSizes());
+                System.out.println("Pizza ingredients: " + orderedPizza.getPizza().getIngredients());
+                System.out.println("Number of pizzas: " + orderedPizza.getNumberOfPizzas());
+                System.out.println("------------");
+            }
+        }
     }
 }
