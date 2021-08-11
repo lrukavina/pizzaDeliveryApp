@@ -1,8 +1,15 @@
 package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.Pizza;
+import com.agency04.sbss.pizza.model.Calzone;
+import com.agency04.sbss.pizza.model.Margherita;
+import com.agency04.sbss.pizza.model.Marinara;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class DominosPizzeria implements PizzeriaService {
@@ -12,6 +19,8 @@ public class DominosPizzeria implements PizzeriaService {
 
     @Value("123 Pizza av.")
     private String address;
+
+    private List<Pizza> pizzas = initializePizzas();
 
     @Override
     public String getName() {
@@ -23,6 +32,19 @@ public class DominosPizzeria implements PizzeriaService {
         return address;
     }
 
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    private List<Pizza> initializePizzas() {
+
+        return new ArrayList<>(Arrays.asList(
+                 new Calzone(),
+                 new Margherita(),
+                 new Marinara()
+        ));
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -31,10 +53,6 @@ public class DominosPizzeria implements PizzeriaService {
         this.address = address;
     }
 
-    @Override
-    public Pizza makePizza(Pizza pizza) {
-        return pizza;
-    }
 
     @Override
     public String toString() {
