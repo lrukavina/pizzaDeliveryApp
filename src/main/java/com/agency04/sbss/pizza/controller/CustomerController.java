@@ -50,5 +50,4 @@ public class CustomerController {
     public void deleteCustomer(@PathVariable final String username){
         customerService.deleteCustomer(username);
     }
-
 }

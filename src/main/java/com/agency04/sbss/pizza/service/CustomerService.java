@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public interface CustomerService {
     Customer findCustomerByUsername(String username);
+
     Optional<Customer> saveCustomer(Customer customer);
     Optional<Customer> updateCustomer(Customer updatedCustomer);
     void deleteCustomer(String username);

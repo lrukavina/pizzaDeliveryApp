@@ -1,20 +1,12 @@
 package com.agency04.sbss.pizza.model;
 
-import com.agency04.sbss.pizza.Pizza;
-import com.agency04.sbss.pizza.enumeration.PizzaIngredient;
-import com.agency04.sbss.pizza.enumeration.PizzaSize;
+import com.agency04.sbss.pizza.PizzaInterface;
+import com.agency04.sbss.pizza.enumeration.PizzaIngredientEnum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Margherita implements Pizza {
-
-    private List<PizzaSize> pizzaSizes = new ArrayList<>(Arrays.asList(
-            PizzaSize.SMALL,
-            PizzaSize.MEDIUM,
-            PizzaSize.LARGE
-    ));
+public class Margherita implements PizzaInterface {
 
     @Override
     public String getName() {
@@ -22,24 +14,13 @@ public class Margherita implements Pizza {
     }
 
     @Override
-    public List<PizzaIngredient> getIngredients() {
-        List<PizzaIngredient> pizzaIngredients = new ArrayList<>();
+    public Set<PizzaIngredientEnum> getIngredients() {
+        Set<PizzaIngredientEnum> pizzaIngredientEnums = new HashSet<>();
 
-        pizzaIngredients.add(PizzaIngredient.TOMATO_SAUCE);
-        pizzaIngredients.add(PizzaIngredient.MOZZARELLA);
-        pizzaIngredients.add(PizzaIngredient.OREGANO);
+        pizzaIngredientEnums.add(PizzaIngredientEnum.TOMATO_SAUCE);
+        pizzaIngredientEnums.add(PizzaIngredientEnum.MOZZARELLA);
+        pizzaIngredientEnums.add(PizzaIngredientEnum.OREGANO);
 
-        return pizzaIngredients;
-    }
-
-    @Override
-    public List<PizzaSize> getSizes() {
-        return pizzaSizes;
-    }
-
-    @Override
-    public void setSize(PizzaSize size) {
-        pizzaSizes.clear();
-        pizzaSizes.add(size);
+        return pizzaIngredientEnums;
     }
 }

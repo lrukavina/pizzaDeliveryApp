@@ -1,8 +1,9 @@
 package com.agency04.sbss.pizza.controller;
 
 
-import com.agency04.sbss.pizza.Pizza;
+import com.agency04.sbss.pizza.PizzaInterface;
 import com.agency04.sbss.pizza.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,20 +15,21 @@ import java.util.List;
 public class PizzeriaController {
 
     private final DeliveryService deliveryService;
+    @Autowired
     private final PizzeriaService pizzeriaService;
 
     public PizzeriaController(DeliveryService deliveryService, PizzeriaService pizzeriaService) {
         this.deliveryService = deliveryService;
-        this.pizzeriaService = this.deliveryService.getCurrentPizzeria();
+        this.pizzeriaService = pizzeriaService;
     }
 
     @GetMapping
     public PizzeriaService getPizzaDeliveryService(){
-        return deliveryService.getCurrentPizzeria();
+        return pizzeriaService;
     }
 
     @GetMapping("menu")
-    public List<Pizza> getMenu(){
+    public List<PizzaInterface> getMenu(){
         return pizzeriaService.getPizzas();
     }
 }

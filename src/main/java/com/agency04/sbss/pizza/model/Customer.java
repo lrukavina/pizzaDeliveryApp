@@ -1,15 +1,40 @@
 package com.agency04.sbss.pizza.model;
 
+import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
+@Table(name = "customer")
 public class Customer {
 
-    private String username;
-    private String name;
-    private String surname;
+    @Id
+    private Long id;
 
-    public Customer(String username, String name, String surname) {
+    private String username;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_details_id")
+    private CustomerDetails customerDetails;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Delivery> deliveries;
+
+    public Customer(){}
+
+    public Customer(Long id, String username, CustomerDetails customerDetails, List<Delivery> deliveries) {
+        this.id = id;
         this.username = username;
-        this.name = name;
-        this.surname = surname;
+        this.customerDetails = customerDetails;
+        this.deliveries = deliveries;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -20,19 +45,26 @@ public class Customer {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
     }
 
-    public String getSurname() {
-        return surname;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(getId(), customer.getId()) &&
+                Objects.equals(getUsername(), customer.getUsername()) &&
+                Objects.equals(getCustomerDetails(), customer.getCustomerDetails());
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(), getCustomerDetails());
     }
 }
