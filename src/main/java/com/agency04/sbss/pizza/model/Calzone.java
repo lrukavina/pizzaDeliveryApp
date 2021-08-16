@@ -1,6 +1,5 @@
 package com.agency04.sbss.pizza.model;
 
-import com.agency04.sbss.pizza.PizzaInterface;
 import com.agency04.sbss.pizza.enumeration.PizzaIngredientEnum;
 
 import java.util.HashSet;

@@ -8,6 +8,7 @@ import java.util.Objects;
 public class CustomerDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "first_name")

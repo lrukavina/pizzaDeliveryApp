@@ -8,6 +8,7 @@ import java.util.*;
 public class Pizza {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

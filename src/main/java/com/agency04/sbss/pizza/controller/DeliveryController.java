@@ -1,6 +1,7 @@
 package com.agency04.sbss.pizza.controller;
 
 import com.agency04.sbss.pizza.model.Delivery;
+import com.agency04.sbss.pizza.model.DeliveryForm;
 import com.agency04.sbss.pizza.service.DeliveryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,12 @@ public class DeliveryController {
 
 
     @PostMapping("/order")
-    public ResponseEntity<Delivery> orderPizza(@RequestBody final Delivery delivery){
-        return deliveryService.order(delivery)
+    public ResponseEntity<Delivery> orderPizza(@RequestBody final DeliveryForm deliveryForm){
+        return deliveryService.order(deliveryForm)
                 .map(
-                        vaccineDTO -> ResponseEntity
+                        newDelivery -> ResponseEntity
                                 .status(HttpStatus.CREATED)
-                                .body(vaccineDTO)
+                                .body(newDelivery)
                 )
                 .orElseGet(
                         () -> ResponseEntity

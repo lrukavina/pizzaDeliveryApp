@@ -1,7 +1,7 @@
 package com.agency04.sbss.pizza.controller;
 
 
-import com.agency04.sbss.pizza.PizzaInterface;
+import com.agency04.sbss.pizza.model.PizzaInterface;
 import com.agency04.sbss.pizza.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

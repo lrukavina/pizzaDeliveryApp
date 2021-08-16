@@ -1,6 +1,6 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.PizzaInterface;
+import com.agency04.sbss.pizza.model.PizzaInterface;
 import com.agency04.sbss.pizza.model.Calzone;
 import com.agency04.sbss.pizza.model.Margherita;
 import com.agency04.sbss.pizza.model.Marinara;

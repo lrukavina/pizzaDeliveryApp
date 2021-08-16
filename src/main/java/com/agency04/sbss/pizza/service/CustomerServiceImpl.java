@@ -1,5 +1,7 @@
 package com.agency04.sbss.pizza.service;
 
+import com.agency04.sbss.pizza.exception.CustomerExistsException;
+import com.agency04.sbss.pizza.exception.CustomerNotFoundException;
 import com.agency04.sbss.pizza.model.Customer;
 import com.agency04.sbss.pizza.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -21,17 +23,37 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer = Optional.ofNullable(customerRepository.findByUsername(username));
 
-        return customer.orElse(null);
+        if(customer.isEmpty()){
+            throw new CustomerNotFoundException("Customer with username: \""+ username +"\" does not exist!");
+        }
+        else {
+            return customer.get();
+        }
+    }
+
+    private Optional<Customer> checkIfCustomerExists(String username){
+        Optional<Customer> customer;
+
+        customer = Optional.ofNullable(customerRepository.findByUsername(username));
+
+        return customer;
     }
 
     public Optional<Customer> saveCustomer(Customer customer) {
-         customerRepository.save(customer);
-         return Optional.of(customer);
+
+        Optional<Customer> checkedCustomer = checkIfCustomerExists(customer.getUsername());
+        if(checkedCustomer.isEmpty()){
+            customerRepository.save(customer);
+            return Optional.of(customer);
+        }
+        else {
+            throw new CustomerExistsException("Customer with username: \""+ customer.getUsername()+"\" already exists!");
+        }
     }
 
     @Override
     public Optional<Customer> updateCustomer(Customer updatedCustomer) {
-        Customer customer = customerRepository.findByUsername(updatedCustomer.getUsername());
+        Customer customer = findCustomerByUsername(updatedCustomer.getUsername());
         customer.getCustomerDetails().setFirstName(updatedCustomer.getCustomerDetails().getFirstName());
         customer.getCustomerDetails().setLastName(updatedCustomer.getCustomerDetails().getLastName());
         customer.getCustomerDetails().setPhone(updatedCustomer.getCustomerDetails().getPhone());
@@ -42,7 +64,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(String username) {
-    customerRepository.deleteCustomerByUsername(username);
+        Customer customer = findCustomerByUsername(username);
+        customerRepository.deleteCustomerByUsername(customer.getUsername());
     }
 
 }
