@@ -32,6 +32,12 @@ public class CustomerDetails {
         this.customer = customer;
     }
 
+    public CustomerDetails(String firstName, String lastName, String phone){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+    }
+
     public Long getId() {
         return id;
     }

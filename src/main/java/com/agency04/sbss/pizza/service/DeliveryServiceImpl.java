@@ -2,12 +2,18 @@ package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.converter.DeliveryToCustomerConverter;
 import com.agency04.sbss.pizza.converter.DeliveryToPizzaOrderConverter;
+import com.agency04.sbss.pizza.dto.CustomerDTO;
+import com.agency04.sbss.pizza.dto.DeliveryDTO;
+import com.agency04.sbss.pizza.dto.PizzaOrderDTO;
+import com.agency04.sbss.pizza.enumeration.PizzaSize;
 import com.agency04.sbss.pizza.model.*;
 import com.agency04.sbss.pizza.repository.DeliveryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
@@ -22,12 +28,13 @@ public class DeliveryServiceImpl implements DeliveryService {
 
 
     @Override
-    public List<Delivery> getOrders() {
-        return deliveryRepository.findAll();
+    public Optional<List<DeliveryDTO>> getOrders() {
+        return Optional.of(deliveryRepository.findAll().stream().map(this::mapDeliveryToDTO)
+                .collect(Collectors.toList()));
     }
 
   @Override
-    public Optional<Delivery> order(DeliveryForm deliveryForm) {
+    public Optional<DeliveryDTO> order(DeliveryForm deliveryForm) {
 
       DeliveryToCustomerConverter deliveryToCustomerConverter = new DeliveryToCustomerConverter(customerService);
       DeliveryToPizzaOrderConverter deliveryToPizzaOrderConverter = new DeliveryToPizzaOrderConverter();
@@ -51,8 +58,31 @@ public class DeliveryServiceImpl implements DeliveryService {
             }
         }
 
-        return Optional.of(deliveryRepository.save(delivery));
+        deliveryRepository.save(delivery);
+        return Optional.of(mapDeliveryToDTO(delivery));
+    }
 
+    private DeliveryDTO mapDeliveryToDTO(Delivery delivery){
+
+        String username = delivery.getCustomer().getUsername();
+        String firstName = delivery.getCustomer().getCustomerDetails().getFirstName();
+        String lastName = delivery.getCustomer().getCustomerDetails().getLastName();
+        String phone = delivery.getCustomer().getCustomerDetails().getPhone();
+
+        CustomerDTO customerDTO = new CustomerDTO(username, firstName, lastName, phone);
+
+        List<PizzaOrderDTO> pizzaOrderDTOS = new ArrayList<>();
+
+        for (PizzaOrder pizzaOrder: delivery.getPizzaOrders()){
+            String pizzaName = pizzaOrder.getPizza().getName();
+            String quantity = pizzaOrder.getQuantity();
+            PizzaSize pizzaSize = pizzaOrder.getSize();
+
+            PizzaOrderDTO pizzaOrderDTO = new PizzaOrderDTO(pizzaName, quantity, pizzaSize);
+            pizzaOrderDTOS.add(pizzaOrderDTO);
+        }
+
+        return new DeliveryDTO(customerDTO, pizzaOrderDTOS);
     }
 
 }

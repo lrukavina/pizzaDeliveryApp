@@ -30,6 +30,11 @@ public class Customer {
         this.deliveries = deliveries;
     }
 
+    public Customer(String username, CustomerDetails customerDetails){
+        this.username = username;
+        this.customerDetails = customerDetails;
+    }
+
     public Long getId() {
         return id;
     }

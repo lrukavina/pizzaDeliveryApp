@@ -1,14 +1,14 @@
-package com.agency04.sbss.pizza.model;
+package com.agency04.sbss.pizza.dto;
 
 import com.agency04.sbss.pizza.enumeration.PizzaSize;
 
-public class PizzaOrderForm {
-    
+public class PizzaOrderDTO {
+
     private String pizzaName;
-    private Integer quantity;
+    private String quantity;
     private PizzaSize pizzaSize;
 
-    public PizzaOrderForm(String pizzaName, Integer quantity, PizzaSize pizzaSize) {
+    public PizzaOrderDTO(String pizzaName, String quantity, PizzaSize pizzaSize) {
         this.pizzaName = pizzaName;
         this.quantity = quantity;
         this.pizzaSize = pizzaSize;
@@ -22,11 +22,11 @@ public class PizzaOrderForm {
         this.pizzaName = pizzaName;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

@@ -17,6 +17,6 @@ public class DeliveryToCustomerConverter implements Converter<DeliveryForm, Cust
     @Override
     public Customer convert(DeliveryForm source) {
 
-       return customerService.findCustomerByUsername(source.getCustomerUsername());
+       return customerService.findConvertedCustomer(source.getCustomerUsername()).get();
     }
 }

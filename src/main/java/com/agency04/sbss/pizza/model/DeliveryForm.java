@@ -5,9 +5,9 @@ import java.util.List;
 
 public class DeliveryForm {
 
-    String customerUsername;
-    LocalDate submissionDate;
-    List<PizzaOrderForm> pizzaOrderForms;
+    private String customerUsername;
+    private LocalDate submissionDate;
+    private List<PizzaOrderForm> pizzaOrderForms;
 
     public DeliveryForm(String customerUsername, List<PizzaOrderForm> pizzaOrderForms) {
         this.customerUsername = customerUsername;
