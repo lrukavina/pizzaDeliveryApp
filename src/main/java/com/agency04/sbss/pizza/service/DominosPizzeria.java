@@ -1,6 +1,6 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.Pizza;
+import com.agency04.sbss.pizza.model.PizzaInterface;
 import com.agency04.sbss.pizza.model.Calzone;
 import com.agency04.sbss.pizza.model.Margherita;
 import com.agency04.sbss.pizza.model.Marinara;
@@ -20,7 +20,7 @@ public class DominosPizzeria implements PizzeriaService {
     @Value("123 Pizza av.")
     private String address;
 
-    private List<Pizza> pizzas = initializePizzas();
+    private List<PizzaInterface> pizzaInterfaces = initializePizzas();
 
     @Override
     public String getName() {
@@ -32,11 +32,11 @@ public class DominosPizzeria implements PizzeriaService {
         return address;
     }
 
-    public List<Pizza> getPizzas() {
-        return pizzas;
+    public List<PizzaInterface> getPizzas() {
+        return pizzaInterfaces;
     }
 
-    private List<Pizza> initializePizzas() {
+    private List<PizzaInterface> initializePizzas() {
 
         return new ArrayList<>(Arrays.asList(
                  new Calzone(),

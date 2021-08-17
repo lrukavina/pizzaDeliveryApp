@@ -1,6 +1,6 @@
 package com.agency04.sbss.pizza.enumeration;
 
-public enum PizzaIngredient {
+public enum PizzaIngredientEnum {
 
     TOMATO_SAUCE("tomato sauce"),
     MOZZARELLA("mozzarella"),
@@ -15,7 +15,7 @@ public enum PizzaIngredient {
 
     private final String description;
 
-    PizzaIngredient(String description){
+    PizzaIngredientEnum(String description){
         this.description = description;
     }
 

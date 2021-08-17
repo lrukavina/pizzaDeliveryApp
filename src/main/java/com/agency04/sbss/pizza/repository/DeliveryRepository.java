@@ -1,14 +1,13 @@
 package com.agency04.sbss.pizza.repository;
 
-import com.agency04.sbss.pizza.model.DeliveryOrderForm;
-import com.agency04.sbss.pizza.service.PizzeriaService;
+
+import com.agency04.sbss.pizza.model.Delivery;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface DeliveryRepository {
-
-    PizzeriaService getCurrentPizzeria();
-    List<DeliveryOrderForm> getOrders();
-    Optional<DeliveryOrderForm> saveOrder(DeliveryOrderForm deliveryOrder);
+@Repository
+public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
+    List<Delivery> findAll();
 }

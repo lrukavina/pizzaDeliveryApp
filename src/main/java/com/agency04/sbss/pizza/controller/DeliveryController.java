@@ -1,14 +1,14 @@
 package com.agency04.sbss.pizza.controller;
 
-import com.agency04.sbss.pizza.dto.DeliveryOrderFormDTO;
-import com.agency04.sbss.pizza.model.DeliveryOrderForm;
+import com.agency04.sbss.pizza.dto.DeliveryDTO;
+import com.agency04.sbss.pizza.model.DeliveryForm;
 import com.agency04.sbss.pizza.service.DeliveryService;
-import com.agency04.sbss.pizza.service.DeliveryServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/delivery")
@@ -20,13 +20,14 @@ public class DeliveryController {
         this.deliveryService = deliveryService;
     }
 
+
     @PostMapping("/order")
-    public ResponseEntity<DeliveryOrderForm> orderPizza(@RequestBody final DeliveryOrderFormDTO deliveryOrderFormDTO){
-        return deliveryService.order(deliveryOrderFormDTO)
+    public ResponseEntity<DeliveryDTO> orderPizza(@RequestBody final DeliveryForm deliveryForm){
+        return deliveryService.order(deliveryForm)
                 .map(
-                        vaccineDTO -> ResponseEntity
+                        newDelivery -> ResponseEntity
                                 .status(HttpStatus.CREATED)
-                                .body(vaccineDTO)
+                                .body(newDelivery)
                 )
                 .orElseGet(
                         () -> ResponseEntity
@@ -36,7 +37,7 @@ public class DeliveryController {
     }
 
     @GetMapping("/list")
-    public List<DeliveryOrderForm> getOrders(){
+    public Optional<List<DeliveryDTO>> getOrders(){
         return deliveryService.getOrders();
     }
 

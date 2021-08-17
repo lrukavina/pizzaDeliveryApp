@@ -1,18 +1,22 @@
 package com.agency04.sbss.pizza.converter;
 
 import com.agency04.sbss.pizza.model.Customer;
-import com.agency04.sbss.pizza.model.DeliveryOrderForm;
+import com.agency04.sbss.pizza.model.DeliveryForm;
+import com.agency04.sbss.pizza.service.CustomerService;
 import org.springframework.core.convert.converter.Converter;
 
-public class DeliveryToCustomerConverter implements Converter<DeliveryOrderForm, Customer> {
+public class DeliveryToCustomerConverter implements Converter<DeliveryForm, Customer> {
+
+    private final CustomerService customerService;
+
+    public DeliveryToCustomerConverter(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
 
     @Override
-    public Customer convert(DeliveryOrderForm source) {
+    public Customer convert(DeliveryForm source) {
 
-        return new Customer(
-                source.getCustomer().getUsername(),
-                source.getCustomer().getName(),
-                source.getCustomer().getSurname()
-        );
+       return customerService.findConvertedCustomer(source.getCustomerUsername()).get();
     }
 }
